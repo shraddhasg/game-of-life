@@ -12,7 +12,9 @@ const generateNextGeneration = function (currentGeneration) {
 
       let liveCount = countOfliveNeighbours(neighbours);
 
-      let currentCellStatus = isCurrentCellLive(liveCount);
+      let currentCellValue = currentGeneration[row][column];
+      // console.log(currentCellValue);
+      let currentCellStatus = isCurrentCellLive(liveCount, currentCellValue);
 
       nextGeneration[row][column] = currentCellStatus;
     }
@@ -20,9 +22,11 @@ const generateNextGeneration = function (currentGeneration) {
   return nextGeneration;
 };
 
-const isCurrentCellLive = function (liveCount) {
-  if (liveCount == 3 || liveCount == 2) return 1;
-  if (liveCount == 3) return 1;
+const isCurrentCellLive = function (liveCount, currentCellValue) {
+  if (currentCellValue == 1) {
+    if (liveCount == 3 || liveCount == 2) return 1;
+  }
+  if (currentCellValue == 0 && liveCount == 3) return 1;
   return 0;
 };
 
@@ -65,4 +69,10 @@ let currentGeneration = [
 let neighbours = generateNextGeneration(currentGeneration);
 console.log(neighbours);
 
-module.exports = { generateNextGeneration };
+module.exports = {
+  generateNextGeneration,
+  isCurrentCellLive,
+  getCell,
+  surrounding,
+  countOfliveNeighbours,
+};
